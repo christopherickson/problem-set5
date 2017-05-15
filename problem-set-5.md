@@ -17,8 +17,39 @@ Execute your program on the ``data-sets/bed/lamina.bed`` file:
 python3 problem_1.py lamina.bed
 ```
 
+Chris Erickson's problem_1 script
+```python
+  1 #! /usr/bin/env python3
+  2 
+  3 import sys
+  4 from collections import Counter
+  5 
+  6 filename = sys.argv[1]
+  7 print(filename)
+  8 
+  9 counts = Counter() #Dictionary will add value (interval) to each key
+ 10 #(chr) 
+ 11 #unique_chr = set() #start a set for each unique chr
+ 12 
+ 13 for line in open(filename):
+ 14     if line.startswith('#'):
+ 15         continue
+ 16     fields = line.split('\t')
+ 17     chrom = fields[0]
+ 18     counts[chrom] += 1
+ 19     
+ 20 for chrom, count in counts.items():
+ 21     print(chrom, count, sep = '\t')
+ ```
+
 Which chromosome has the most intervals?
 ``Chromosome 3``
+
+
+
+
+
+
 
 ## Problem 2
 Write a python program that parses a fastq file and determines the total number
@@ -27,12 +58,49 @@ of ``C`` bases in the fastq. Write the program as a python script named
 
 Execute your program on the ``data-sets/fastq/SP1.fq`` file.
 
+Chris Erickson's problem_2 script
+```python
+  6 import sys
+  7 filename = sys.argv[1]
+  8 
+  9 from collections import Counter
+ 10 bases = Counter()
+ 11 
+ 12 count = 0
+ 13 
+ 14 for line in open(filename):
+ 15     line = line.rstrip()
+ 16 
+ 17     if count == 0:
+ 18         count += 1
+ 19 
+ 20     elif count == 1:
+ 21         seq = line
+ 22         count += 1
+ 23 
+ 24     elif count == 2:
+ 25         count += 1
+ 26 
+ 27     elif count == 3:
+ 28         count = 0
+ 30
+ 34         for base in seq:
+ 35            bases[base] += 1
+ 36
+ 41 for key, value in bases.items():
+ 42     if key == "C":
+ 43         print(key, value)
+ ```
+ 
 ```bash
 python3 problem_2.py SP1.fq
 ```
 
 What is the total number of ``C`` bases?
 ``2046``
+
+
+
 
 ## Problem 3: STILL WORKING ON #3
 Write a python program that parses a fastq file and determines the most
@@ -44,6 +112,10 @@ What is the most common hexamer at the 5' end?
 
 What is the most common hexamer at the 3' end?
 ``write your answer here``
+
+
+
+
 
 ## Problem 4:
 
@@ -63,6 +135,40 @@ the sequence and the reference. (hint: use the ``.get_tag()`` method to extract
 the ``NM`` tag value). 
 
 FYI to view the contents of a bam file as plain-text, use samtools view:
+
+Chris Erickson's problem_4 script
+```python
+  3 import sys
+  4 filename = sys.argv[1]
+  5 
+  6 from pysam import AlignmentFile
+  7 bamfile = AlignmentFile(filename) 
+  8 
+  9 pos = 0
+ 10 neg = 0
+ 11 notmis = 0
+ 12 mis = 0
+ 13 
+ 14 for record in bamfile:
+ 15     if record.flag == 0:
+ 16         neg += 1
+ 17 
+ 18     elif record.flag == 16:
+ 19         pos += 1
+ 20 
+ 21 print(pos, neg)
+ 22 
+ 23 bamfile = AlignmentFile(filename)
+ 24 
+ 25 for record in bamfile:
+ 26     if record.get_tag('NM') == 0:
+ 27         notmis +=1
+ 28 
+ 29     elif record.get_tag('NM') > 0:
+ 30         mis += 1
+ 31 
+ 32 print(notmis, mis)
+ ```
 
 ```bash
 samtools view file.bam | less
