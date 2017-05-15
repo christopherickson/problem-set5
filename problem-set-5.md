@@ -107,6 +107,48 @@ Write a python program that parses a fastq file and determines the most
 common 6-mer (aka hexamer) sequence at the 5' and also the 3' end of each read. 
 Write the program as a python script named ``problem_3.py``
 
+Chris Erickson's problem_3 script
+```python
+  7 import sys
+  8 filename = sys.argv[1]
+  9 
+ 10 from collections import Counter
+ 11 fivecount = Counter()
+ 12 threecount = Counter()
+ 13 
+ 14 count = 0
+ 15 
+ 16 for line in open(filename):
+ 17     line = line.rstrip()
+ 18 
+ 19     if count == 0:
+ 20         count += 1
+ 21 
+ 22     if count == 1:
+ 23         seq = line
+ 24         count += 1
+ 25 
+ 26     if count == 2:
+ 27         count += 1
+ 28 
+ 29     elif count == 3:
+ 30         count = 0
+ 31         
+ 32         for base in seq:
+ 33             fivecount[base[:6]] += 1
+ 34 
+ 35         for base in seq.reverse():
+ 36             threecount[base[:6]] += 1
+ 37 
+ 38 print(fivecount)
+ 39 
+ 40 fiveprime = fivecount.most_common(1)
+ 41 print(fiveprime)
+ 42 
+ 43 threeprime = threecount.most_common(1)
+ 44 print(threeprime)
+ ```
+ 
 What is the most common hexamer at the 5' end?
 ``write your answer here``
 
