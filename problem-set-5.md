@@ -1,3 +1,5 @@
+# Chris Erickson HW5
+
 
 # Overview
 For this problem set you will write a series of python programs to perform
@@ -16,7 +18,7 @@ python3 problem_1.py lamina.bed
 ```
 
 Which chromosome has the most intervals?
-``write your answer here``
+``Chromosome 3``
 
 ## Problem 2
 Write a python program that parses a fastq file and determines the total number
@@ -30,9 +32,9 @@ python3 problem_2.py SP1.fq
 ```
 
 What is the total number of ``C`` bases?
-``write your answer here``
+``2046``
 
-## Problem 3:
+## Problem 3: STILL WORKING ON #3
 Write a python program that parses a fastq file and determines the most
 common 6-mer (aka hexamer) sequence at the 5' and also the 3' end of each read. 
 Write the program as a python script named ``problem_3.py``
@@ -67,14 +69,14 @@ samtools view file.bam | less
 ```
 
 How many positive strand aligned reads are there?
-``your answer here``
+``27098``
 
 How many negative strand aligned reads?
-``your answer here``
+``26596``
 
 How many alignments with no mismatches?
-``your answer here``
+``42694``
 
 How many alignments with more than zero mismatches?
-``your answer here``
+``11000``
 
